@@ -1,0 +1,159 @@
+/*
+ * dts file for Xilinx ZynqMP UltraZed-EG IO carrier card
+ * Copyright (C) 2019, Istituto Italiano di Tecnologia,
+ * Electronic Design Laboratory
+ * Andrea Merello <andrea.merello@gmail.com>
+ *
+ * Based on:
+ * dts file for Xilinx ZynqMP zc1751-xm018-dc4
+ * (C) Copyright 2015 - 2016, Xilinx, Inc.
+ * Michal Simek <michal.simek@xilinx.com>
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
+/dts-v1/;
+
+#include "zynqmp.dtsi"
+#include "zynqmp-clk-ccf.dtsi"
+
+/ {
+	model = "ZynqMP zc";
+	compatible = "xlnx,zynqmp-uz-eg-iocc", "xlnx,zynqmp";
+
+	aliases {
+		ethernet0 = &gem3;
+		gpio0 = &gpio;
+		serial0 = &uart0;
+		spi0 = &qspi;
+		mmc0 = &sdhci1;
+	};
+
+	chosen {
+		bootargs = "earlycon";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x0 0x0 0x80000000>;
+	};
+};
+
+
+/* fpd_dma clk 667MHz, lpd_dma 500MHz */
+&fpd_dma_chan1 {
+	status = "okay";
+	xlnx,include-sg; /* for testing purpose */
+	xlnx,overfetch; /* for testing purpose */
+	xlnx,ratectrl = <0>; /* for testing purpose */
+	xlnx,src-issue = <31>;
+};
+
+&fpd_dma_chan2 {
+	status = "okay";
+	xlnx,ratectrl = <100>; /* for testing purpose */
+	xlnx,src-issue = <4>; /* for testing purpose */
+};
+
+&fpd_dma_chan3 {
+	status = "okay";
+};
+
+&fpd_dma_chan4 {
+	status = "okay";
+	xlnx,include-sg; /* for testing purpose */
+};
+
+&fpd_dma_chan5 {
+	status = "okay";
+};
+
+&fpd_dma_chan6 {
+	status = "okay";
+	xlnx,include-sg; /* for testing purpose */
+};
+
+&fpd_dma_chan7 {
+	status = "okay";
+};
+
+&fpd_dma_chan8 {
+	status = "okay";
+	xlnx,include-sg; /* for testing purpose */
+};
+
+&lpd_dma_chan1 {
+	status = "okay";
+};
+
+&lpd_dma_chan2 {
+	status = "okay";
+};
+
+&lpd_dma_chan3 {
+	status = "okay";
+};
+
+&lpd_dma_chan4 {
+	status = "okay";
+};
+
+&lpd_dma_chan5 {
+	status = "okay";
+};
+
+&lpd_dma_chan6 {
+	status = "okay";
+};
+
+&lpd_dma_chan7 {
+	status = "okay";
+};
+
+&lpd_dma_chan8 {
+	status = "okay";
+};
+
+&xlnx_dp {
+	status = "okay";
+};
+
+&xlnx_dpdma {
+	status = "okay";
+};
+
+&gem3 {
+
+	status = "okay";
+	phy-mode = "rgmii-id";
+	phy-handle = <&ethernet_phy8>;
+	ethernet_phy8: ethernet-phy@8 { /* Vitesse VSC8211 */
+		reg = <8>;
+	};
+
+};
+
+&gpio {
+	status = "okay";
+};
+
+&gpu {
+	status = "okay";
+};
+
+
+&uart0 {
+	status = "okay";
+};
+
+
+&watchdog0 {
+	status = "okay";
+};
+
+&sdhci1 {
+	status = "okay";
+	broken-mmc-highspeed;
+	max-frequency = <50000000>;
+};
