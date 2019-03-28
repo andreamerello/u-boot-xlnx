@@ -254,8 +254,9 @@
 		 "tftpboot 6000000 rootfs.cpio.ub && booti 80000 6000000 $fdt_addr\0" \
 	"nosmp=setenv bootargs $bootargs maxcpus=1\0" \
 	"nfsroot=setenv bootargs $bootargs root=/dev/nfs nfsroot=$serverip:/mnt/sata,tcp ip=$ipaddr:$serverip:$serverip:255.255.255.0:zynqmp:eth0:off rw\0" \
-	"sdroot0=setenv bootargs $bootargs root=/dev/mmcblk0p2 rw rootwait\0" \
-	"sdroot1=setenv bootargs $bootargs root=/dev/mmcblk1p2 rw rootwait\0" \
+	"sdrootuuid=setenv bootargs $bootargs root=PARTUUID=${uuid} rw rootwait\0" \
+	"sdroot0=part uuid mmc 0:2 uuid && run sdrootuuid\0" \
+	"sdroot1=part uuid mmc 1:2 uuid && run sdrootuuid\0" \
 	"android=setenv bootargs $bootargs init=/init androidboot.selinux=disabled androidboot.hardware=$board\0" \
 	"android_debug=run android && setenv bootargs $bootargs video=DP-1:1024x768@60 drm.debug=0xf\0" \
 	"usb_dfu_spl=booti $kernel_addr - $fdt_addr\0" \
